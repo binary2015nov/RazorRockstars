@@ -1,4 +1,4 @@
-﻿@inherits ViewPage<RockstarsResponse>
+﻿@model RockstarsResponse
 
 @{
     Layout = "HtmlReport";
@@ -10,38 +10,38 @@
 <script type="text/javascript">
     function RockstarsCtrl($scope) {
         var response = @Model.AsRawJson();
-       
-        $scope.rockstars = response.Results;
-        
+
+        $scope.rockstars = response.results;
+
         $scope.noOfStars = function () {
             return $scope.rockstars.length;
         }
-        
+
         $scope.addRockstar = function() {
-            var nextId = Math.max.apply(null, $.map($scope.rockstars, function(r) { return r.Id })) + 1;
+            var nextId = Math.max.apply(null, $.map($scope.rockstars, function(r) { return r.id })) + 1;
             $scope.rockstars.push({
-                Id: nextId,
-                FirstName:$scope.FirstName,
-                LastName:$scope.LastName,
-                Age:$scope.Age,
-                Alive:$scope.Alive,
-                Url:"/stars/" + ($scope.Alive ? "alive" : "dead") + "/" + $scope.LastName.toLowerCase() + "/"
+                id: nextId,
+                firstName:$scope.firstName,
+                lastName:$scope.lastName,
+                age:$scope.age,
+                alive:$scope.alive,
+                url:"/stars/" + ($scope.alive ? "alive" : "dead") + "/" + $scope.lastName.toLowerCase() + "/"
             });
-            $scope.FirstName = $scope.LastName = $scope.Age = "";               
-            $scope.Alive = false;
+            $scope.firstName = $scope.lastName = $scope.Age = "";
+            $scope.alive = false;
         };
-        
+
         $scope.removeRockstar = function(id) {
             $scope.rockstars = $._filter($scope.rockstars, function(rockstar) {
-                return rockstar.Id != id;
+                return rockstar.id != id;
             });
         };
-        
+
         //default values
-        $scope.FirstName = "Amy";
-        $scope.LastName = "Winehouse";
-        $scope.Age = 27;
-        $scope.Alive = false;
+        $scope.firstName = "Amy";
+        $scope.lastName = "Winehouse";
+        $scope.age = 27;
+        $scope.alive = false;
     }
 </script>
 
@@ -58,44 +58,52 @@
             <a href="?View=Rockstars&amp;Template=SimpleLayout">Rockstars &amp; SimpleLayout</a>
         </div>
     </div>
-    
+
     <div id="app">
         <img src="/img/AngularJS-large.png" width="383" height="108" />
-    
+
         <h3>We have {{noOfStars()}} Rockstars</h3>
-    
+
         <table>
-            <thead> 
+            <thead>
                 <tr>
                     <th>Name</th>
                     <th>Age</th>
-                    <th></th> 
+                    <th></th>
                 </tr>
             </thead>
             <tfoot>
                 <tr>
                     <td colspan="3">
                         <form ng-submit="addRockstar()">
-                            <div><b><label>FirstName</label></b> 
-                                <input ng-model="FirstName" type="text" name="FirstName" value="" /></div>
-                            <div><b><label>LastName</label></b> 
-                                <input ng-model="LastName" type="text" name="LastName" value="" /></div>
-                            <div><b><label>Age</label></b> 
-                                <input ng-model="Age" type="text" name="Age" value="" /></div>
-                            <div><b><label>Alive</label></b>
-                                <input ng-model="Alive" type="checkbox" name="Alive" value="true" /></div>
-                            <p><button type="submit" ng-disabled="!FirstName || !LastName || !Age">Add new Rockstar</button></p>
+                            <div>
+                                <b><label>FirstName</label></b>
+                                <input ng-model="firstName" type="text" name="firstName" value="" />
+                            </div>
+                            <div>
+                                <b><label>LastName</label></b>
+                                <input ng-model="lastName" type="text" name="lastName" value="" />
+                            </div>
+                            <div>
+                                <b><label>Age</label></b>
+                                <input ng-model="age" type="text" name="age" value="" />
+                            </div>
+                            <div>
+                                <b><label>Alive</label></b>
+                                <input ng-model="alive" type="checkbox" name="alive" value="true" />
+                            </div>
+                            <p><button type="submit" ng-disabled="!firstName || !lastName || !age">Add new Rockstar</button></p>
                         </form>
                     </td>
                 </tr>
             </tfoot>
             <tbody>
                 <tr ng-repeat="rockstar in rockstars">
-                    <td class="alive-{{rockstar.Alive}}"><a href="{{rockstar.Url}}">{{rockstar.FirstName}} {{rockstar.LastName}}</a></td>
-                    <td class="alive-{{rockstar.Alive}}">{{rockstar.Age}}</td>     
-                    <td class="alive-{{rockstar.Alive}}">
-                        <a ng-click="removeRockstar(rockstar.Id)">remove</a>
-                    </td>       
+                    <td class="alive-{{rockstar.alive}}"><a href="{{rockstar.url}}">{{rockstar.firstName}} {{rockstar.lastName}}</a></td>
+                    <td class="alive-{{rockstar.alive}}">{{rockstar.age}}</td>
+                    <td class="alive-{{rockstar.alive}}">
+                        <a ng-click="removeRockstar(rockstar.id)">remove</a>
+                    </td>
                 </tr>
             </tbody>
         </table>

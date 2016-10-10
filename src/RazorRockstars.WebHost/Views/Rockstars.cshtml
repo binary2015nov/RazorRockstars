@@ -1,9 +1,9 @@
-﻿@inherits ViewPage<RockstarsResponse>
-
+﻿@model RockstarsResponse
 @{
-    ViewBag.Title = Model.Aged.HasValue 
-        ? "{0} year old rockstars".Fmt(Model.Aged) : "All Rockstars";
     Layout = "HtmlReport";
+    ViewData["Title"] = Model.Aged.HasValue
+        ? $"{Model.Aged} year old rockstars" 
+        : "All Rockstars"; ;
 }
 
 <div style="float:right">
@@ -17,12 +17,12 @@
         <a href="?Template=SimpleLayout">Template = SimpleLayout</a>
         <a href="?View=AngularJS&amp;Template=SimpleLayout">AngularJS &amp; SimpleLayout</a>
     </div>
-    
+
     <p>&nbsp;</p>
     <form action="/rockstars" method="POST">
-        <div><b>@Html.Label("FirstName")</b> @Html.TextBox("FirstName","Amy")</div>
-        <div><b>@Html.Label("LastName")</b> @Html.TextBox("LastName","Winehouse")</div>
-        <div><b>@Html.Label("Age")</b> @Html.TextBox("Age","27")</div>
+        <div><b>@Html.Label("FirstName")</b> @Html.TextBox("FirstName", "Amy")</div>
+        <div><b>@Html.Label("LastName")</b> @Html.TextBox("LastName", "Winehouse")</div>
+        <div><b>@Html.Label("Age")</b> @Html.TextBox("Age", "27")</div>
         <div><b>@Html.Label("Alive")</b> @Html.CheckBox("Alive", false)</div>
         <p><button type="submit">Add new Rockstar</button></p>
     </form>
@@ -35,13 +35,13 @@
 
 <h3>We have @Model.Total Rockstars, showing @ViewBag.Title</h3>
 <table>
-    <thead> 
+    <thead>
         <tr>
             <th>Name</th>
             <th>Age</th>
-            <th></th> 
+            <th></th>
         </tr>
-    </thead> 
+    </thead>
     <tfoot>
         <tr>
             <td colspan="3">
@@ -55,24 +55,9 @@
         {
             <tr>
                 <td><a href="@rockstar.Url">@rockstar.FirstName @rockstar.LastName</a></td>
-                <td><a href="/rockstars/aged/@rockstar.Age">@rockstar.Age</a></td>     
-                <td><a href="/rockstars/delete/@rockstar.Id">delete</a></td>       
+                <td><a href="/rockstars/aged/@rockstar.Age">@rockstar.Age</a></td>
+                <td><a href="/rockstars/delete/@rockstar.Id">delete</a></td>
             </tr>
         }
     </tbody>
 </table>
-
-<b class="clear"></b>
-
-<div id="preview">
-    <h1>Implementation</h1>
-
-    <h3><b>Controller</b> <a href="https://github.com/ServiceStackApps/RazorRockstars/blob/master/src/RazorRockstars.WebHost/RockstarsService.cs">/RockstarsService.cs</a></h3>
-    <script src="https://gist.github.com/3616766.js"></script>
-
-    <h3><b>View</b> <a href="https://github.com/ServiceStackApps/RazorRockstars/blob/master/src/RazorRockstars.WebHost/Views/Rockstars.cshtml">/Views/Rockstars.cshtml</a></h3>
-    <script src="https://gist.github.com/3162081.js"></script>
-
-    <h3><b>Layout</b> <a href="https://github.com/ServiceStackApps/RazorRockstars/blob/master/src/RazorRockstars.WebHost/Views/Shared/HtmlReport.cshtml">/Views/Shared/HtmlReport.cshtml</a></h3>
-    <script src="https://gist.github.com/3616883.js"></script>
-</div>
