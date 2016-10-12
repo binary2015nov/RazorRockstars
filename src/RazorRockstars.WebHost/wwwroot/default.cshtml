@@ -299,7 +299,7 @@
         Composable and re-usable functionality can be applied to all your services via 
         <a href="http://docs.servicestack.net/request-and-response-filters.html">Request / Response Filters</a>, 
         <a href="http://docs.servicestack.net/filter-attributes.html">Filter Attributes</a>, 
-        <a href="http://docs.servicestack.net/validation.html">Validators</a> or by extending a common base class -
+        <a href="http://docs.servicestack.net/validation.html#validation-feature">Validators</a> or by extending a common base class -
         all of which get auto-wired with your registered dependencies. Even Razor views have access to your IOC dependencies.
     </p>
     <p>
@@ -309,7 +309,7 @@
         This makes your logic more re-usable and is how any new feature we add to the framework is immediately able to work with your 
         existing services without any code-changes required.
         E.g. you can code as you would normally and throw C# Exceptions and the ideal HTTP Response gets emitted, you also have access to 
-        <a href="http://docs.servicestack.net/architecture-overview.html">rich fluent validation</a>         
+        <a href="http://docs.servicestack.net/validation.html#validation-feature">rich fluent validation</a>         
         that supports returning typed structured error responses back to C# clients.
     </p>
     
@@ -320,7 +320,7 @@
         the content of your dynamic pages in Markdown. 
     </p>
     <p>
-        All <a href="/stars/dead/cobain">Dead</a> and <a href="/stars/alive/grohl">Alive</a> individual Rockstar pages are maintained in this way.
+        All <a href="/stars/dead/cobain">Dead</a> and <a href="/stars/alive/Grohl">Alive</a> individual Rockstar pages are maintained in this way.
     </p>
 
     <a name="complete-stack"></a>
@@ -442,9 +442,9 @@
     <p>
         This is useful whenever you want to display the same page in specialized Mobile and Print Preview website templates.
         You can also let the client change what View and Template gets used by 
-        <a href="https://github.com/NetCoreApps/RazorRockstars/blob/master/src/RazorRockstars.WebHost/RockstarsService.cs#L32">attrubuting your service</a> 
+        <a href="https://github.com/NetCoreApps/RazorRockstars/blob/7ac4330ad3839d46e2b0e45d178f56a33d6cdf7d/src/RazorRockstars.WebHost/RockstarsService.cs#L59">attrubuting your service</a> 
         with the 
-        <a href="https://github.com/ServiceStack/ServiceStack/blob/master/src/ServiceStack.ServiceInterface/ClientCanSwapTemplatesAttribute.cs">[ClientCanSwapTemplates]</a> 
+        <a href="https://github.com/ServiceStack/ServiceStack/blob/master/src/ServiceStack/ClientCanSwapTemplatesAttribute.cs">[ClientCanSwapTemplates]</a> 
         Filter:
     </p>
 
@@ -490,7 +490,7 @@
     <h3>Default pages for directories</h3>
     
     <ul class="urls">
-        <li><a href="/stars/alive/Vedder/default.cshtml">/stars/alive/Vedder/default.cshtml</a> -> /stars/alive/Vedder/</li>
+        <li><a href="/stars/alive/vedder/default.cshtml">/stars/alive/vedder/default.cshtml</a> -> /stars/alive/vedder/</li>
     </ul>
     <p>
         The Above url shows the behaviour when requesting the default document <b>default.cshtml</b> 
@@ -511,7 +511,7 @@
     </p>
 
     <ul class="urls">
-        <li><a href="/stars/alive/grohl">/stars/alive/grohl</a></li>
+        <li><a href="/stars/alive/Grohl">/stars/alive/Grohl</a></li>
         <li><a href="/stars/alive/vedder/">/stars/alive/vedder/</a></li>
     </ul>
     
@@ -550,7 +550,7 @@
     <div style="float:left;">
         <h4>Rockstars still Rocking it</h4>
         <ul>
-            <li><a href="/stars/alive/grohl">/stars/alive/grohl</a></li>
+            <li><a href="/stars/alive/Grohl">/stars/alive/Grohl</a></li>
             <li><a href="/stars/alive/vedder/">/stars/alive/vedder/</a></li>
             <li><a href="/stars/alive/springsteen/">/stars/alive/springsteen/</a></li>
             <li><a href="/stars/alive/love/">/stars/alive/love/</a></li>
@@ -684,14 +684,14 @@
     <h3>Include Partial Markdown views in Razor pages</h3>
     <p>
         We loved Markdown and Razor so much that included in ServiceStack is an enhanced version of Markdown with Razor functionality 
-        and Syntax called <a href="https://servicestack.net/docs/markdown/markdown-razor">Markdown Razor</a> which should be
+        and Syntax called <a href="http://docs.servicestack.net/markdown-razor.html">Markdown Razor</a> which should be
         instantly familiar to existing Razor users. 
     </p>
     
     <p>
         As we expect Razor + Markdown to be an increasingly popular combination we've extend <b>@@Html.PartialMarkdown()</b> support to
         also embed Partials from Markdown. This feature lets you embed any Markdown Page as we've done in 
-        each of the <a href="/stars/alive/cobain">content-heavy</a> <a href="/stars/dead/cobain">Rockstar pages</a> using the 
+        each of the <a href="/stars/alive/vedder/">content-heavy</a> <a href="/stars/dead/cobain/">Rockstar pages</a> using the 
         standard Razor Partial syntax:
     </p>
 
@@ -745,7 +745,7 @@
     <p>
         One way we're currently improving the situation (that also provides a better UX for end-users) has been focusing on making 
         ServiceStack the ideal platform for Single Page Apps
-        - to this end, we're already shipping many <a href="http://mono.servicestack.net/100k-downloads/#spa-optimized">best-of-class features</a> 
+        - to this end, we're already shipping many <a href="https://github.com/ServiceStack/ServiceStackVS">best-of-class features</a> 
         and since Single Page Apps rely on client-side views for rendering, they escape the .NET compilation tax. 
     <p>
     </p>
