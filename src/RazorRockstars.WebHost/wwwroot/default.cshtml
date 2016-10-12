@@ -435,7 +435,7 @@
     <pre><code>
     return new HttpResult(dto) {
         View = {viewName},
-        Template = {layoutName}, // Not available in .NET Core yet
+        //Template = {layoutName}, // Feature not available in .NET Core yet
     };
     </code></pre>
     
@@ -579,7 +579,14 @@
     @@inherits ViewPage&lt;Rockstars&gt;
     </code></pre>
     
-    <p>This will result in the typed <b>@@Model</b> being populated from the HTTP Request params</p>
+    <p>This will result in the typed <b>@@Dto</b> being populated from the HTTP Request params</p>
+
+    <blockquote>
+        There's 
+        <a href="http://odetocode.com/blogs/scott/archive/2016/02/04/extending-razor-views-in-asp-net-core.aspx">still an outstanding issue in MVC .NET Core</a>
+        where the only Razor View you can inherit is <b>RazorPage&lt;object&gt;</b> making <b>@@base.Model</b> a non-useful <b>object</b> Type.
+        Until this issue is resolved you can use the alternative <b>@@base.Dto</b> property to access your Typed Model instead.
+    </blockquote>
 
     <h3>Pages with dynamic View Models</h3>
     <p>
