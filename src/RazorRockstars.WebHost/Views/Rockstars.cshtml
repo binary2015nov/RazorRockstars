@@ -1,9 +1,9 @@
 ﻿@model RockstarsResponse
 @{
-    Layout = "HtmlReport";
+    Layout = Html.ResolveLayout("HtmlReport");
     ViewData["Title"] = Model.Aged.HasValue
-        ? $"{Model.Aged} year old rockstars" 
-        : "All Rockstars"; ;
+? $"{Model.Aged} year old rockstars"
+: "All Rockstars"; ;
 }
 
 <div style="float:right">
@@ -14,6 +14,8 @@
     <a href="?format=csv">csv</a>
     <div id="swap-templates">
         <a href="?View=AngularJS">View = AngularJS</a>
+        <a href="?Template=SimpleLayout">Template = SimpleLayout</a>
+        <a href="?View=AngularJS&amp;Template=SimpleLayout">AngularJS &amp; SimpleLayout</a>
     </div>
 
     <p>&nbsp;</p>

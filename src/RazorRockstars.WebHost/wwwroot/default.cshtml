@@ -435,7 +435,7 @@
     <pre><code>
     return new HttpResult(dto) {
         View = {viewName},
-        //Template = {layoutName}, // Feature not available in .NET Core yet
+        Template = {layoutName},
     };
     </code></pre>
     
@@ -461,8 +461,8 @@
     
     <ul class="urls">
         <li><a href="/rockstars?View=AngularJS">/rockstars?View=AngularJS</a> Use an AngularJS View with client-side templating</li>
-        <li><a style="text-decoration: line-through" href="/rockstars?Template=SimpleLayout">/rockstars?Template=SimpleLayout</a> <s>Change Layout Template used</s> (Not available in .NET Core)</li>
-        <li><a style="text-decoration: line-through" href="/rockstars?View=AngularJS&amp;Template=SimpleLayout">/rockstars?View=AngularJS&amp;Template=SimpleLayout</a> <s>Change View and Template used</s> (Not available in .NET Core)</li>
+        <li><a href="/rockstars?Template=SimpleLayout">/rockstars?Template=SimpleLayout</a> Change Layout Template used</li>
+        <li><a href="/rockstars?View=AngularJS&amp;Template=SimpleLayout">/rockstars?View=AngularJS&amp;Template=SimpleLayout</a> Change View and Template used</li>
     </ul>
 
     <a name="no-ceremony"></a>
@@ -571,22 +571,17 @@
     <h3>Pages with typed View Models</h3>    
     <p>
         In the same way ServiceStack populates the Request DTO in Services, it will auto populate your View model by in Views when
-        inheriting from the Generic <b>ViewPage&lt;&gt;</b> as base class as seen in 
+        inheriting from the Generic <b>ViewPage&lt;TModel&gt;</b> base class that's specified in the
+        <a href="https://github.com/NetCoreApps/RazorRockstars/blob/master/src/RazorRockstars.WebHost/wwwroot/_ViewImports.cshtml">_ViewImports.cshtml</a>
+        as seen in 
         <a href="/TypedModelNoController">/TypedModelNoController</a>:
     </p>
 
     <pre><code>
-    @@inherits ViewPage&lt;Rockstars&gt;
+    @@model SearchRockstars
     </code></pre>
     
-    <p>This will result in the typed <b>@@Dto</b> being populated from the HTTP Request params</p>
-
-    <blockquote>
-        There's 
-        <a href="http://odetocode.com/blogs/scott/archive/2016/02/04/extending-razor-views-in-asp-net-core.aspx">still an outstanding issue in MVC .NET Core</a>
-        where the only Razor View you can inherit is <b>RazorPage&lt;object&gt;</b> making <b>@@base.Model</b> a non-useful <b>object</b> Type.
-        Until this issue is resolved you can use the alternative <b>@@base.Dto</b> property to access your Typed Model instead.
-    </blockquote>
+    <p>This will result in the typed <b>@@Model</b> being populated from the HTTP Request params</p>
 
     <h3>Pages with dynamic View Models</h3>
     <p>
@@ -600,8 +595,7 @@
     </code></pre>
     
     <p>
-        In this case <b>@@Model</b> is a DynamicObject where each dynamic access is delegated to <b>IHttpRequest.GetParams()</b> 
-        which looks for each param in the Request's QueryString, FormData, Cookies and Items.
+        In this case <b>@@Model</b> is a ViewDataDictionary that's populated from the Request's QueryString, FormData, Cookies and Items.
     </p>
     
     <h4>Access Request / Response properties in Views</h4>
@@ -632,8 +626,8 @@
     </p>
     
     <p>
-        Many Micro ORMs like (
-        <a href="https://github.com/ServiceStack/ServiceStack.OrmLite/">OrmLite</a> and 
+        Many Micro ORMs like 
+        (<a href="https://github.com/ServiceStack/ServiceStack.OrmLite/">OrmLite</a> and 
         <a href="http://code.google.com/p/dapper-dot-net">Dapper</a>)
         provide extension methods on ADO.NET's IDbConnection making it trivial to perform common db tasks. 
         Here's an example of filtering the results of the Rockstar table with a typed Request Param:
@@ -650,11 +644,18 @@
     </p>
 
     <pre><code>
-    SetConfig(new HostConfig {
-        CustomHttpHandlers = {
-            { HttpStatusCode.NotFound, new RazorHandler("/notfound") }
-        }
-    });
+    this.CustomErrorHttpHandlers[HttpStatusCode.Unauthorized] = new RazorHandler("/login");
+    </code></pre>
+
+    <p>
+        For NotFound requests we recommend instead to use .NET Core's convention of just registering a 
+        <b>Catch-All</b> Middleware at the end of the App Builder Pipeline. ServiceStack HttpHandlers can
+        be registered as a .NET Core module as-is so we're able to re-use our existing <b>RazorHandler</b>
+        here as well, e.g:
+    </p>
+
+    <pre><code>
+    app.Use(new RazorHandler("/notfound"));
     </code></pre>
 
     <p>
@@ -690,16 +691,10 @@
 
     <h3>Include Partial Markdown views in Razor pages</h3>
     <p>
-        We loved Markdown and Razor so much that included in ServiceStack is an enhanced version of Markdown with Razor functionality 
-        and Syntax called <a href="http://docs.servicestack.net/markdown-razor.html">Markdown Razor</a> which should be
-        instantly familiar to existing Razor users. 
-    </p>
-    
-    <p>
         As we expect Razor + Markdown to be an increasingly popular combination we've extend <b>@@Html.PartialMarkdown()</b> support to
-        also embed Partials from Markdown. This feature lets you embed any Markdown Page as we've done in 
+        also embed Partials from Markdown pages inside Razor Views. This feature lets you embed any Markdown Page as we've done in 
         each of the <a href="/stars/alive/vedder/">content-heavy</a> <a href="/stars/dead/cobain/">Rockstar pages</a> using the 
-        standard Razor Partial syntax:
+        Razor syntax below:
     </p>
 
     <pre><code>
@@ -707,9 +702,7 @@
     </code></pre>
     
     <p>
-        Which tells ServiceStack to embed a Partial named <b>Content</b> inside the page at that location. 
-        First it will look for a Partial named <b>Content.cshtml</b> followed by a Partial named <b>Content.md</b> 
-        if it reaches the Markdown Razor View Engine. 
+        Which tells ServiceStack to embed a Partial named <b>Content.md</b> inside the page at that location. 
         Initially it searches the current directory, followed by any matching Partials in the <b>/Views/Shared</b> folder.
         If you wanted to render a Markdown string instead you can use <b>@@Html.RenderMarkdown()</b>, e.g:
     </p>
@@ -786,7 +779,7 @@
 <div id="preview">
     <h1>Implementation</h1>
     
-    <h3><b>AppHost</b> <a href="https://github.com/NetCoreApps/RazorRockstars/blob/master/src/RazorRockstars.WebHost/StartUp.cs">/StartUp.cs</a></h3>
+    <h3><b>AppHost</b> <a href="https://github.com/NetCoreApps/RazorRockstars/blob/master/src/RazorRockstars.WebHost/Startup.cs">/Startup.cs</a></h3>
     <p>
         In every ServiceStack web service there is a single AppHost which contains all your 
         services configuration and registration (in code). 

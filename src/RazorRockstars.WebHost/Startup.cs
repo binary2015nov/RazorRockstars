@@ -61,7 +61,7 @@ namespace RazorRockstars.WebHost
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            app.Use(new RazorHandler("/notfound").Middleware);
+            app.Use(new RazorHandler("/notfound"));
 
             //Other examples of using built-in ServiceStack Handlers as middleware
             //app.Use(new StaticFileHandler("wwwroot/img/react-logo.png").Middleware);
