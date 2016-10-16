@@ -75,8 +75,6 @@ namespace RazorRockstars.WebHost
 
         public override void Configure(Container container)
         {
-            LogManager.LogFactory = new ConsoleLogFactory();
-
             Plugins.Add(new RazorFormat());
 
             container.Register<IDbConnectionFactory>(
