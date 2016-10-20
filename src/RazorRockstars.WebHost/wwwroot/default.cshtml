@@ -219,7 +219,6 @@
                 <li>Pretty urls by default (no custom Routes needed)</li>
                 <li>Default pages for directories</li>
                 <li>Keep all views and their assets together</li>
-                <li>Cascading Layout templates</li>
             </ul>
         </li>
         <li>
@@ -523,17 +522,12 @@
         copying, updating and deploying as easy as dragging and dropping a folder.  
     </p>
     
-    <img class="preview" src="/img/cascading-layouts.png" align="right" style="margin-left:20px;" alt="Cascading Layout Templates" />
-    <h3>Cascading Layout templates</h3>
+    <h3>Layout templates</h3>
     <p>
-        Cascading layout templates is our simpler solution for MVC Areas, basically if you don't specify a Layout in the
-        Razor page, the <b>_Layout.cshtml</b> that's nearest to the directory where the page is located gets used.
-    </p>
-    <p>
-        E.g. if there is a <b>_Layout.cshtml</b> in the current directory it will use that first, fallbacking to its 
-        parent directory all the way up until it reaches the Root web directory.
-        Finally if there are no _Layout.cshtml templates to be found the default <b>/Views/Shared/_Layout.cshtml</b> will
-        get used. Cascading layout templates is what allows 'dead' and 'alive' Rockstars to share different website templates:
+        Specifying Layouts for Razor Views and Pages follow MVC's convention where it looks for the Layout in your
+        <b>/Views/Shared</b> folder. In this case the Razor Page of each Rockstar references either
+        <b>/Views/Shared/AliveLayout.cshtml</b> or <b>/Views/Shared/AliveLayout.cshtml</b> to give each Rockstar 
+        a different look:
     </p>
     
     <div style="float:left; margin: 0 50px 0 0;">
