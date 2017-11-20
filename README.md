@@ -1,6 +1,6 @@
 ## [Razor Rockstars](https://github.com/ServiceStackApps/RazorRockstars)
 
-> Showcase of ServiceStack's unified HTTP Stack with Razor support, embedded Markdown Razor Views, Controller-less Razor Pages, Cascading Layout templates, Smart View Pages, Flexible Layouts
+> Showcase of ServiceStack's unified HTTP Stack with Razor support, Controller-less Razor Pages, Cascading Layout templates, Smart View Pages, Flexible Layouts
 
 [![](https://raw.githubusercontent.com/ServiceStack/Assets/master/img/livedemos/razor.png)](http://razor.servicestack.net)
 
@@ -17,7 +17,6 @@
  - [One simple and unified HTTP stack](http://razor.servicestack.net/#unified-stack)
  - [No Ceremony Option](http://razor.servicestack.net/#no-ceremony)
  - [Smart View Pages](http://razor.servicestack.net/#smart-views)
- - [Built-in Markdown](http://razor.servicestack.net/#markdown)
  - [Optimized for developer productivity](http://razor.servicestack.net/#optimized-for-dev)
 
 
