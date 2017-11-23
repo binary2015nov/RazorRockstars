@@ -69,6 +69,8 @@ namespace RazorRockstars.WebHost
 
         public override void Configure(Container container)
         {
+            SetConfig(new HostConfig { DebugMode = true });
+
             Plugins.Add(new RazorFormat());
 
             container.Register<IDbConnectionFactory>(
@@ -79,11 +81,6 @@ namespace RazorRockstars.WebHost
                 db.CreateTableIfNotExists<Rockstar>();
                 db.InsertAll(RockstarsService.SeedData);
             }
-
-            //Also works but it's recommended to handle 404's by registering at end of .NET Core pipeline
-            //this.CustomErrorHttpHandlers[HttpStatusCode.NotFound] = new RazorHandler("/notfound");
-
-            SetConfig(new HostConfig { DebugMode = true });
         }
     }
 }
