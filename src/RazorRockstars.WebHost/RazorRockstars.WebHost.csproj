@@ -26,9 +26,4 @@
     <PackageReference Include="ServiceStack.OrmLite.Sqlite" Version="5.*" />
   </ItemGroup>
 
-  <Target Name="PrepublishScript" BeforeTargets="PrepareForPublish">
-    <Exec Command="bower install" />
-    <Exec Command="dotnet bundle" />
-  </Target>
-
 </Project>
