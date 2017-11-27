@@ -10,7 +10,6 @@ using ServiceStack.Host.Handlers;
 using ServiceStack.Logging;
 using ServiceStack.Mvc;
 using ServiceStack.OrmLite;
-using ServiceStack.Configuration;
 
 namespace RazorRockstars.WebHost
 {
