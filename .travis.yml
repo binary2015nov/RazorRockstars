@@ -1,5 +1,4 @@
 language: csharp
-solution: src/RazorRockstars.WebHost.sln
 os: linux
 dist: trusty
 sudo: required
