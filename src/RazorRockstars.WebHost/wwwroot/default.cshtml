@@ -231,15 +231,6 @@
             </ul>
         </li>
         <li>
-            <a href="#markdown">Markdown built-in</a>
-            <ul>
-                <li>Maintain Content in Markdown (ideal for Content)</li>
-                <li>Include Partial Markdown views in Razor pages</li>
-                <li>Build entire website pages using just Markdown Razor + static _Layout.shtml templates</li>
-                <li>Provide access to 'Markdown only' content</li>
-            </ul>
-        </li>
-        <li>
             <a href="#optimized-for-dev">Optimized for developer productivity</a>            
             <ul>
                 <li>Great performance, Optimized for run-time and iteration times</li>        
@@ -705,14 +696,6 @@
     @@Html.RenderMarkdown("## Heading")
     </code></pre>
 
-    <h3>Provide access to 'Markdown only' content</h3>
-    <p>
-        Having such deep control over the implementation of each View engine allows us to do interesting things like 
-        being able embed partials from different view engines and allowing you to fetch the text-only Markdown version 
-        of each page by changing the format returned using the 
-        <a href="/stars/dead/cobain/Content?format=text.bare">?format=text.bare</a> query string.
-    </p>
-    
     <a name="optimized-for-dev"></a>
     <h2>Optimized for developer productivity</h2>
     <p>
@@ -787,5 +770,6 @@
         <li>Override ServiceStack's 404 Handler with the <b class="src">/NotFound.cshtml</b> Razor page</li>
     </ol>
     <script src="https://gist.github.com/gistlyn/956a1c5cb7a13240daa7f1ea00ab8881.js"></script>
+    
 
 </div>

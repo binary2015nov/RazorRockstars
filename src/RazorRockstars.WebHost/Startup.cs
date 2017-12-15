@@ -15,31 +15,22 @@ namespace RazorRockstars.WebHost
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+        public Startup(IConfiguration configuration)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
-            Configuration = builder.Build();
+            Configuration = configuration;
         }
 
-        public IConfigurationRoot Configuration { get; }
+        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add framework services.
             services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -52,7 +43,9 @@ namespace RazorRockstars.WebHost
 
             app.UseStaticFiles();
 
-            app.UseServiceStack(new AppHost());
+            app.UseServiceStack(new AppHost {
+                AppSettings = new NetCoreAppSettings(Configuration)
+            });
 
             app.UseMvc(routes =>
             {
@@ -71,10 +64,12 @@ namespace RazorRockstars.WebHost
 
     public class AppHost : AppHostBase
     {
-        public AppHost() : base("Test Razor", typeof(AppHost).GetAssembly()) { }
+        public AppHost() : base("Test Razor", typeof(AppHost).Assembly) { }
 
         public override void Configure(Container container)
         {
+            SetConfig(new HostConfig { DebugMode = true });
+
             Plugins.Add(new RazorFormat());
 
             container.Register<IDbConnectionFactory>(
@@ -85,11 +80,6 @@ namespace RazorRockstars.WebHost
                 db.CreateTableIfNotExists<Rockstar>();
                 db.InsertAll(RockstarsService.SeedData);
             }
-
-            //Also works but it's recommended to handle 404's by registering at end of .NET Core pipeline
-            //this.CustomErrorHttpHandlers[HttpStatusCode.NotFound] = new RazorHandler("/notfound");
-
-            SetConfig(new HostConfig { DebugMode = true });
         }
     }
 }

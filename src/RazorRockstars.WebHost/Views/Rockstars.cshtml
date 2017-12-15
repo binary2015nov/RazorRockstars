@@ -2,8 +2,8 @@
 @{
     Layout = Html.ResolveLayout("HtmlReport");
     ViewData["Title"] = Model.Aged.HasValue
-? $"{Model.Aged} year old rockstars"
-: "All Rockstars"; ;
+        ? $"{Model.Aged} year old rockstars"
+        : "All Rockstars";
 }
 
 <div style="float:right">
