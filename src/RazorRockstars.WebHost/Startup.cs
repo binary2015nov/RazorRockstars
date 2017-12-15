@@ -64,12 +64,13 @@ namespace RazorRockstars.WebHost
 
     public class AppHost : AppHostBase
     {
-        public AppHost() : base("Test Razor", typeof(AppHost).Assembly) { }
+        public AppHost() : base("Test Razor", typeof(AppHost).Assembly)
+        {
+            Config.DebugMode = true;
+        }
 
         public override void Configure(Container container)
         {
-            SetConfig(new HostConfig { DebugMode = true });
-
             Plugins.Add(new RazorFormat());
 
             container.Register<IDbConnectionFactory>(
